@@ -1,0 +1,2 @@
+prepend-non-duplicate;GZ_SIM_RESOURCE_PATH;share/phoenix_drone_description/models
+prepend-non-duplicate;GAZEBO_MODEL_PATH;share/phoenix_drone_description/models

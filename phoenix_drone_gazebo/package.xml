@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>phoenix_drone_gazebo</name>
+  <version>1.0.0</version>
+  <description>
+    Gazebo Classic 11 world files for PhoenixDrone simulation.
+    Contains pothole-road world with obstacles for aerial inspection.
+  </description>
+
+  <maintainer email="dev@phoenix-drone.local">PhoenixDrone Dev</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>phoenix_drone_description</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

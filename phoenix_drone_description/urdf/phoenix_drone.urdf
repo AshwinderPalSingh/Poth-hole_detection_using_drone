@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<robot name="phoenix_drone" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Simple URDF for robot_state_publisher TF tree -->
+
+  <!-- base_link is the TF root (odom -> base_link comes from odometry) -->
+  <link name="base_link">
+    <visual>
+      <geometry><box size="0.47 0.47 0.11"/></geometry>
+      <material name="dark_grey"><color rgba="0.15 0.15 0.15 1"/></material>
+    </visual>
+    <collision>
+      <geometry><box size="0.47 0.47 0.11"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="1.5"/>
+      <inertia ixx="0.035" ixy="0" ixz="0" iyy="0.046" iyz="0" izz="0.098"/>
+    </inertial>
+  </link>
+
+  <!-- IMU -->
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="imu_link"/>
+
+  <!-- Camera (downward facing) -->
+  <joint name="camera_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera_link"/>
+    <origin xyz="0 0 -0.06" rpy="0 1.5708 0"/>
+  </joint>
+  <link name="camera_link">
+    <visual>
+      <geometry><box size="0.02 0.04 0.02"/></geometry>
+      <material name="blue"><color rgba="0 0 0.8 1"/></material>
+    </visual>
+    <inertial>
+      <mass value="0.05"/>
+      <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/>
+    </inertial>
+  </link>
+
+  <!-- LiDAR -->
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
+    <origin xyz="0 0 0.08" rpy="0 0 0"/>
+  </joint>
+  <link name="lidar_link">
+    <visual>
+      <geometry><cylinder radius="0.03" length="0.04"/></geometry>
+      <material name="lidar_blue"><color rgba="0 0 0.8 1"/></material>
+    </visual>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_footprint"/>
+    <origin xyz="0 0 -0.15" rpy="0 0 0"/>
+  </joint>
+  <link name="base_footprint"/>
+
+  <joint name="gps_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="gps_link"/>
+    <origin xyz="0 0 0.10" rpy="0 0 0"/>
+  </joint>
+  <link name="gps_link"/>
+
+</robot>

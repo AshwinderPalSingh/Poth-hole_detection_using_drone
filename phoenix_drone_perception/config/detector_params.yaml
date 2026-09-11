@@ -1,0 +1,69 @@
+# PhoenixDrone perception parameters
+# ═══════════════════════════════════
+# These are the same values perception.launch.py applies. Load this file
+# directly when running a node on its own, e.g.
+#   ros2 run phoenix_drone_perception pothole_detector \
+#       --ros-args --params-file config/detector_params.yaml
+
+pothole_detector:
+  ros__parameters:
+    use_sim_time: true
+
+    # ── Model ──
+    # Leave use_yolo false to run the built-in classical detector, which
+    # needs no weights. Set it true AND give model_path a trained .pt file
+    # for real-world imagery. (use_yolo true with an empty model_path falls
+    # back to generic YOLOv8n, which does not know what a pothole is.)
+    use_yolo: false
+    model_path: ""
+    image_size: 640
+    device: "cpu"              # "cpu", "cuda", or "cuda:0"
+
+    # ── Input ──
+    camera_topic: "/phoenix/camera/image_raw"
+    max_inference_fps: 6.0     # inference rate cap
+    publish_annotated: true
+
+    # ── Detection ──
+    confidence_threshold: 0.35
+
+    # ── Classical detector tuning (ignored when use_yolo is true) ──
+    min_area_px: 150           # smallest blob to consider
+    min_circularity: 0.45      # potholes are roughly round
+    darkness_ratio: 0.35       # how much darker than the road surface
+
+pothole_mapper:
+  ros__parameters:
+    use_sim_time: true
+
+    # ── Fusion ──
+    # Sightings within min_separation_m are treated as the same pothole;
+    # it is confirmed once seen this many times, which rejects one-frame
+    # artefacts. Keep the separation above the projection error (~0.05 m)
+    # but below the spacing of genuinely distinct potholes.
+    min_separation_m: 1.5
+    min_sightings_to_confirm: 3
+    min_confidence: 0.35
+
+    # ── Georeferencing (must match the world's spherical_coordinates) ──
+    ref_latitude: 28.6139
+    ref_longitude: 77.2090
+    ref_altitude: 216.0
+    road_plane_z: 0.02         # height of the road surface in metres
+
+    # ── Camera geometry, used until CameraInfo arrives ──
+    image_width: 640
+    image_height: 480
+    horizontal_fov: 1.3962634  # radians (80°), matches the drone SDF
+
+    # ── Output ──
+    output_file: "/tmp/pothole_map.json"
+    report_file: "/tmp/pothole_report.txt"
+    publish_rate_hz: 1.0
+
+navigation_monitor:
+  ros__parameters:
+    use_sim_time: true
+    publish_rate_hz: 2.0
+    gps_topic: "/phoenix/gps/fix"
+    survey_topic: "/phoenix/survey/status"

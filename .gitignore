@@ -1,0 +1,34 @@
+# ROS 2 / Colcon
+build/
+install/
+log/
+.colcon/
+
+# Python
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Gazebo
+.gz/
+
+# YOLOv8 model weights (large binary)
+phoenix_drone_perception/models/*.pt
+phoenix_drone_perception/models/*.onnx
+
+# Survey outputs are written to /tmp, nothing to ignore in-tree.
