@@ -1,5 +1,5 @@
 # PhoenixDrone - Autonomous Road Pothole Survey
-
+![Drone](media/drone.gif)
 A ROS 2 Humble and Gazebo Classic 11 simulation of a quadrotor that flies an
 autonomous survey over a road, detects potholes with its downward camera, and
 produces a georeferenced pothole map with WGS-84 coordinates.
